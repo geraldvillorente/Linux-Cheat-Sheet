@@ -1,0 +1,225 @@
+#!/usr/bin/env bash
+#
+# manual
+#
+# Copyright 2013 Gerald Villorente <gerald@ninjas-corner.com>
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+# MA 02110-1301, USA.
+#
+# My manual in Unix administration.
+#
+###################################
+# Display permission table.
+###################################
+function permission() {
+ echo "
+   CHMOD is used to change permissions of a file.
+          PERMISSION      COMMAND
+
+           U   G   W
+          rwx rwx rwx     chmod 777 filename
+          rwx rwx r-x     chmod 775 filename
+          rwx r-x r-x     chmod 755 filename
+          rw- rw- r--     chmod 664 filename
+          rw- r-- r--     chmod 644 filename
+
+          U = User
+          G = Group
+          W = World
+
+          r = Readable
+          w = writable
+          x = executable
+          - = no permission
+
+  Here is another way of looking at it:
+
+  Permissions:
+
+  400     read by owner
+  040     read by group
+  004     read by anybody (other)
+  200     write by owner
+  020     write by group
+  002     write by anybody
+  100     execute by owner
+  010     execute by group
+  001     execute by anybody
+ "
+}
+###################################
+# Compressing using Tar.
+###################################
+function tar() {
+  echo "
+    Creating a tar file
+      tar -cvwf file.tar myfile.txt
+      tar -cvwf home.tar directory_to_compress
+
+    Creating a tar.gz file
+      tar -zcvf archive_name.tar.gz directory_or_file_to_compress
+
+    Creating tar.bz2 file
+      tar -jcvf archive_name.tar.bz2 directory_or_file_to_compress
+
+    Creating a tarred file that is compressed
+      tar -cjvf test.tbz directory_or_file_to_compress
+
+    Extracting tar.bz2 file in different directory
+      tar -jxvf archive_name.tar.bz2 -C /path/to/any/directory/
+
+    Extracting the files from a tar file
+      tar -xvwf myfile.tar
+      tar -xvwf myfile.tar -C /path/to/any/directory/
+
+    Extracting the files from a tar.gz file
+      tar -xvwzf myfile.tar.gz
+      tar -xvwzf myfile.tar.gz -C /path/to/any/directory/
+      tar -zxvf archive_name.tar.gz -C /path/to/any/directory/
+
+    Listing the tar contents without extracting any of the files
+      tar -tvf myfile.tar
+  "
+}
+#################################
+# Zip manual.
+#################################
+function zip() {
+  echo "
+    To compress a directory with zip do the following
+      zip -r archive_name.zip directory_or_file_to_compress
+
+    Here’s how you extract a zip archive:
+      unzip archive_name.zip
+  "
+}
+#################################
+# MySQL manual.
+#################################
+function mysql() {
+  echo "
+    List all database
+      mysql -u DBuser -h DBhostname -pDBpassword -Bse ‘show databases’
+        or
+      ssh user@host “mysql -uDBuser -pDBpassword -Bse ‘show databases’”
+
+    Create database
+      ssh user@host “mysql -uDBusername -pDBpassword -Bse ‘create DBname’”
+
+    Drop database
+      ssh user@host “mysql -uDBusername -pDBpassword -Bse ‘drop database DBname’”
+
+    Create database
+      ssh user@host “mysql -uDBusername -pDBpassword -Bse ‘create database DBname’”
+
+    Use database
+      ssh user@host “mysql -uDBusername -pDBpassword -Bse ‘use DBname’”
+
+    Import database
+      ssh user@host “mysql -uDBusername -pDBpassword -Bse ‘use DBname; \. /path/to/source/file.sql’”
+
+    Backup database
+      ssh -C user@hostname “mysqldump –opt -uDBuser -pDBpassword –compress DBname | gzip -9 -c” > /path/to/target/output.sql.gz
+  "
+}
+##################################
+# Find and delete.
+##################################
+function findremove() {
+  echo "
+    Example:
+
+    For SVN:
+      sudo find . -type d -name .svn | xargs rm -rf
+
+    For Git:
+      sudo find . -type d -name .git | xargs rm -rf
+  "
+}
+##################################
+# Managing Services.
+##################################
+function services() {
+  echo "
+    Start Apache service
+      sudo etc/init.d/apache2 start
+      sudo service apache2 start
+      sudo service httpd start
+
+    Stopping Apache service
+      sudo etc/init.d/apache2 stop
+      sudo service apache2 stop
+      sudo service httpd stop
+
+    Reloading Apache configurations
+      sudo etc/init.d/apache2 reload
+      sudo service apache2 reload
+      sudo service httpd reload
+
+    Restarting Apache service
+      sudo etc/init.d/apache2 restart
+      sudo service apache2 restart
+      sudo service httpd restart
+
+    Starting MySQL service
+      sudo /etc/init.d/mysql start
+      sudo service mysql start
+      sudo service mysqld start
+
+    Stopping MySQL service
+      sudo /etc/init.d/mysql stop
+      sudo service mysql stop
+      sudo service mysqld stop
+
+    Reloading MySQL configurations
+      sudo /etc/init.d/mysql reload
+      sudo service mysql reload
+      sudo service mysqld reload
+
+    Restarting MySQL service
+      sudo /etc/init.d/mysql restart
+      sudo service mysql restart
+      sudo service mysqld restart
+
+    Starting networking service
+      sudo /etc/init.d/networking start
+      sudo service networking start
+
+    Stopping networking service
+      sudo /etc/init.d/networking stop
+      sudo service networking stop
+
+    Reloading networking configurations
+      sudo /etc/init.d/networking reload
+      sudo service networking reload
+  "
+}
+
+if [ "$1" == "--permission" ]; then
+  permission
+elif [ "$1" == "--tar" ]; then
+  tar
+elif [ "$1" == "--zip" ]; then
+  zip
+elif [ "$1" == "--mysql" ]; then
+  mysql
+elif [ "$1" == "--findremove" ]; then
+  findremove
+elif [ "$1" == "--services" ]; then
+  services
+fi
+
+exit
