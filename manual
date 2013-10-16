@@ -220,6 +220,16 @@ elif [ "$1" == "--findremove" ]; then
   findremove
 elif [ "$1" == "--services" ]; then
   services
+elif [ -z "$1" ]; then
+  echo "
+    Parameters are:
+      --permission      Display permission table
+      --tar             Show examples of tar command
+      --zip             Show examples of zip command
+      --mysql           Show examples of mysql command
+      --findremove      Show examples of find and rm command
+      --services        Show examples of managing daemon
+  "
 fi
 
 exit
