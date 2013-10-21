@@ -243,6 +243,7 @@ elif [ -z "$1" ]; then
       --mysql           Show examples of mysql command
       --findremove      Show examples of find and rm command
       --services        Show examples of managing daemon
+      --sed             Show examples of sed command
   "
 fi
 
