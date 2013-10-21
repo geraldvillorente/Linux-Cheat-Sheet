@@ -207,6 +207,18 @@ function services() {
       sudo service networking reload
   "
 }
+##################################
+# Sed.
+##################################
+function sed() {
+  echo "
+    Replacing a string
+      sed 's/old/new/g' file
+    
+    Replacing a string and make it permanent.
+      sed -i 's/old/new/g' file
+  "
+}
 
 if [ "$1" == "--permission" ]; then
   permission
@@ -220,6 +232,8 @@ elif [ "$1" == "--findremove" ]; then
   findremove
 elif [ "$1" == "--services" ]; then
   services
+elif [ "$1" == "--sed" ]; then
+  sed
 elif [ -z "$1" ]; then
   echo "
     Parameters are:
