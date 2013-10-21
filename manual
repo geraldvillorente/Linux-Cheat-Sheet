@@ -215,8 +215,20 @@ function sed() {
     Replacing a string
       sed 's/old/new/g' file
     
-    Replacing a string and make it permanent.
+    Replacing a string and make it permanent
       sed -i 's/old/new/g' file
+      sed -e 's/old/new/g' > file
+      
+    For more files or for a list of them
+      grep -lre 'pattern' . | xargs -d'\n' sed -i 's/old/replace/g'
+  "
+}
+##################################
+# Resources.
+##################################
+function resources() {
+  echo "
+    http://www.catonmat.net/blog/bash-one-liners-explained-part-two/
   "
 }
 
@@ -234,6 +246,8 @@ elif [ "$1" == "--services" ]; then
   services
 elif [ "$1" == "--sed" ]; then
   sed
+elif [ "$1" == "--resources" ]; then
+  resources
 elif [ -z "$1" ]; then
   echo "
     Parameters are:
