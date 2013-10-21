@@ -258,6 +258,7 @@ elif [ -z "$1" ]; then
       --findremove      Show examples of find and rm command
       --services        Show examples of managing daemon
       --sed             Show examples of sed command
+      --resources       Show resources from internet
   "
 fi
 
