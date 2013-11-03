@@ -231,7 +231,39 @@ function resources() {
     http://www.catonmat.net/blog/bash-one-liners-explained-part-two/
   "
 }
+##################################
+# Creating folder/s.
+##################################
+function directory() {
+  echo "
+    Create multiple directories at once in a single location with nested directories
+      mkdir -p Dev/{git,www/{drupal,apc},svn}/sub
+      
+      Expected Output:
+      
+      Dev
+       -- git
+           -- sub
+       -- www
+           -- drupal
+           -- apc
+       -- svn
+           -- sub
+    
+    Create nested folders at once
+      mkdir -p Dev/sub1/sub2/sub3/sub4
+      
+      Expected Output:
+      
+      Dev
+       -- sub1
+           -- sub2
+               -- sub3
+                   -- sub4
+  "
+}
 
+##################################
 if [ "$1" == "--permission" ]; then
   permission
 elif [ "$1" == "--tar" ]; then
@@ -248,6 +280,8 @@ elif [ "$1" == "--sed" ]; then
   sed
 elif [ "$1" == "--resources" ]; then
   resources
+elif [ "$1" == "--directory" ]; then
+  directory
 elif [ -z "$1" ]; then
   echo "
     Parameters are:
