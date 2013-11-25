@@ -21,16 +21,21 @@
 #
 # My manual in Unix administration.
 #
+
+bold=`tput bold`
+normal=`tput sgr0`
+
 ###################################
 # Display permission table.
 ###################################
 function permission() {
  echo "
    CHMOD is used to change permissions of a file.
-          PERMISSION      COMMAND
+
+          ${bold}PERMISSION      COMMAND${normal}
 
            U   G   W
-          rwx rwx rwx     chmod 777 filename
+          ${bold}rwx rwx rwx     chmod 777 filename
           rwx rwx r-x     chmod 775 filename
           rwx r-x r-x     chmod 755 filename
           rw- rw- r--     chmod 664 filename
@@ -43,13 +48,13 @@ function permission() {
           r = Readable
           w = writable
           x = executable
-          - = no permission
+          - = no permission${normal}
 
   Here is another way of looking at it:
 
   Permissions:
 
-  400     read by owner
+  ${bold}400     read by owner
   040     read by group
   004     read by anybody (other)
   200     write by owner
@@ -57,7 +62,7 @@ function permission() {
   002     write by anybody
   100     execute by owner
   010     execute by group
-  001     execute by anybody
+  001     execute by anybody${normal}
  "
 }
 ###################################
@@ -66,32 +71,32 @@ function permission() {
 function tar() {
   echo "
     Creating a tar file
-      tar -cvwf file.tar myfile.txt
-      tar -cvwf home.tar directory_to_compress
+      ${bold}tar -cvwf file.tar myfile.txt
+      tar -cvwf home.tar directory_to_compress${normal}
 
     Creating a tar.gz file
-      tar -zcvf archive_name.tar.gz directory_or_file_to_compress
+      ${bold}tar -zcvf archive_name.tar.gz directory_or_file_to_compress${normal}
 
     Creating tar.bz2 file
-      tar -jcvf archive_name.tar.bz2 directory_or_file_to_compress
+      ${bold}tar -jcvf archive_name.tar.bz2 directory_or_file_to_compress${normal}
 
     Creating a tarred file that is compressed
-      tar -cjvf test.tbz directory_or_file_to_compress
+      ${bold}tar -cjvf test.tbz directory_or_file_to_compress${normal}
 
     Extracting tar.bz2 file in different directory
-      tar -jxvf archive_name.tar.bz2 -C /path/to/any/directory/
+      ${bold}tar -jxvf archive_name.tar.bz2 -C /path/to/any/directory/${normal}
 
     Extracting the files from a tar file
-      tar -xvwf myfile.tar
-      tar -xvwf myfile.tar -C /path/to/any/directory/
+      ${bold}tar -xvwf myfile.tar
+      tar -xvwf myfile.tar -C /path/to/any/directory/${normal}
 
     Extracting the files from a tar.gz file
-      tar -xvwzf myfile.tar.gz
+      ${bold}tar -xvwzf myfile.tar.gz
       tar -xvwzf myfile.tar.gz -C /path/to/any/directory/
-      tar -zxvf archive_name.tar.gz -C /path/to/any/directory/
+      tar -zxvf archive_name.tar.gz -C /path/to/any/directory/${normal}
 
     Listing the tar contents without extracting any of the files
-      tar -tvf myfile.tar
+      ${bold}tar -tvf myfile.tar${normal}
   "
 }
 #################################
@@ -100,10 +105,10 @@ function tar() {
 function zip() {
   echo "
     To compress a directory with zip do the following
-      zip -r archive_name.zip directory_or_file_to_compress
+      ${bold}zip -r archive_name.zip directory_or_file_to_compress${normal}
 
     Here’s how you extract a zip archive:
-      unzip archive_name.zip
+      ${bold}unzip archive_name.zip${normal}
   "
 }
 #################################
@@ -112,27 +117,27 @@ function zip() {
 function mysql() {
   echo "
     List all database
-      mysql -u DBuser -h DBhostname -pDBpassword -Bse ‘show databases’
+      ${bold}mysql -u DBuser -h DBhostname -pDBpassword -Bse ‘show databases’${normal}
         or
-      ssh user@host “mysql -uDBuser -pDBpassword -Bse ‘show databases’”
+      ${bold}ssh user@host “mysql -uDBuser -pDBpassword -Bse ‘show databases’”${normal}
 
     Create database
-      ssh user@host “mysql -uDBusername -pDBpassword -Bse ‘create DBname’”
+      ${bold}ssh user@host “mysql -uDBusername -pDBpassword -Bse ‘create DBname’”${normal}
 
     Drop database
-      ssh user@host “mysql -uDBusername -pDBpassword -Bse ‘drop database DBname’”
+      ${bold}ssh user@host “mysql -uDBusername -pDBpassword -Bse ‘drop database DBname’”${normal}
 
     Create database
-      ssh user@host “mysql -uDBusername -pDBpassword -Bse ‘create database DBname’”
+      ${bold}ssh user@host “mysql -uDBusername -pDBpassword -Bse ‘create database DBname’”${normal}
 
     Use database
-      ssh user@host “mysql -uDBusername -pDBpassword -Bse ‘use DBname’”
+      ${bold}ssh user@host “mysql -uDBusername -pDBpassword -Bse ‘use DBname’”${normal}
 
     Import database
-      ssh user@host “mysql -uDBusername -pDBpassword -Bse ‘use DBname; \. /path/to/source/file.sql’”
+      ${bold}ssh user@host “mysql -uDBusername -pDBpassword -Bse ‘use DBname; \. /path/to/source/file.sql’”${normal}
 
     Backup database
-      ssh -C user@hostname “mysqldump –opt -uDBuser -pDBpassword –compress DBname | gzip -9 -c” > /path/to/target/output.sql.gz
+      ${bold}ssh -C user@hostname “mysqldump –opt -uDBuser -pDBpassword –compress DBname | gzip -9 -c” > /path/to/target/output.sql.gz${normal}
   "
 }
 ##################################
@@ -143,10 +148,10 @@ function findremove() {
     Example:
 
     For SVN:
-      sudo find . -type d -name .svn | xargs rm -rf
+      ${bold}sudo find . -type d -name .svn | xargs rm -rf${normal}
 
     For Git:
-      sudo find . -type d -name .git | xargs rm -rf
+      ${bold}sudo find . -type d -name .git | xargs rm -rf${normal}
   "
 }
 ##################################
@@ -155,56 +160,56 @@ function findremove() {
 function services() {
   echo "
     Start Apache service
-      sudo etc/init.d/apache2 start
+      ${bold}sudo etc/init.d/apache2 start
       sudo service apache2 start
-      sudo service httpd start
+      sudo service httpd start${normal}
 
     Stopping Apache service
-      sudo etc/init.d/apache2 stop
+      ${bold}sudo etc/init.d/apache2 stop
       sudo service apache2 stop
-      sudo service httpd stop
+      sudo service httpd stop${normal}
 
     Reloading Apache configurations
-      sudo etc/init.d/apache2 reload
+      ${bold}sudo etc/init.d/apache2 reload
       sudo service apache2 reload
-      sudo service httpd reload
+      sudo service httpd reload${normal}
 
     Restarting Apache service
-      sudo etc/init.d/apache2 restart
+      ${bold}sudo etc/init.d/apache2 restart
       sudo service apache2 restart
-      sudo service httpd restart
+      sudo service httpd restart${normal}
 
     Starting MySQL service
-      sudo /etc/init.d/mysql start
+      ${bold}sudo /etc/init.d/mysql start
       sudo service mysql start
-      sudo service mysqld start
+      sudo service mysqld start${normal}
 
     Stopping MySQL service
-      sudo /etc/init.d/mysql stop
+      ${bold}sudo /etc/init.d/mysql stop
       sudo service mysql stop
-      sudo service mysqld stop
+      sudo service mysqld stop${normal}
 
     Reloading MySQL configurations
-      sudo /etc/init.d/mysql reload
+      ${bold}sudo /etc/init.d/mysql reload
       sudo service mysql reload
-      sudo service mysqld reload
+      sudo service mysqld reload${normal}
 
     Restarting MySQL service
-      sudo /etc/init.d/mysql restart
+      ${bold}sudo /etc/init.d/mysql restart
       sudo service mysql restart
-      sudo service mysqld restart
+      sudo service mysqld restart${normal}
 
     Starting networking service
-      sudo /etc/init.d/networking start
-      sudo service networking start
+      ${bold}sudo /etc/init.d/networking start
+      sudo service networking start${normal}
 
     Stopping networking service
-      sudo /etc/init.d/networking stop
-      sudo service networking stop
+      ${bold}sudo /etc/init.d/networking stop
+      sudo service networking stop${normal}
 
     Reloading networking configurations
-      sudo /etc/init.d/networking reload
-      sudo service networking reload
+      ${bold}sudo /etc/init.d/networking reload
+      sudo service networking reload${normal}
   "
 }
 ##################################
@@ -213,14 +218,14 @@ function services() {
 function sed() {
   echo "
     Replacing a string
-      sed 's/old/new/g' file
+      ${bold}sed 's/old/new/g' file${normal}
 
     Replacing a string and make it permanent
-      sed -i 's/old/new/g' file
-      sed -e 's/old/new/g' > file
+      ${bold}sed -i 's/old/new/g' file
+      sed -e 's/old/new/g' > file${normal}
 
     For more files or for a list of them
-      grep -lre 'pattern' . | xargs -d'\n' sed -i 's/old/replace/g'
+      ${bold}grep -lre 'pattern' . | xargs -d'\n' sed -i 's/old/replace/g'${normal}
   "
 }
 ##################################
@@ -237,7 +242,7 @@ function resources() {
 function directory() {
   echo "
     Create multiple directories at once in a single location with nested directories
-      mkdir -p Dev/{git,www/{drupal,apc},svn}/sub
+      ${bold}mkdir -p Dev/{git,www/{drupal,apc},svn}/sub${normal}
 
       Expected Output:
 
@@ -251,7 +256,7 @@ function directory() {
            -- sub
 
     Create nested folders at once
-      mkdir -p Dev/sub1/sub2/sub3/sub4
+      ${bold}mkdir -p Dev/sub1/sub2/sub3/sub4${normal}
 
       Expected Output:
 
@@ -268,10 +273,10 @@ function directory() {
 function watch() {
   echo "
     Watch mysql process. Where -n 1 specifies that mysqladmin executes every second.
-      watch -n 1 mysqladmin processlist
+      ${bold}watch -n 1 mysqladmin processlist${normal}
 
     Watch mysql process using specific user account.
-      watch -n 1 mysqladmin --user=<user> --password=<password> processlist
+      ${bold}watch -n 1 mysqladmin --user=<user> --password=<password> processlist${normal}
 
   "
 }
@@ -300,16 +305,16 @@ elif [ "$1" == "--watch" ]; then
 elif [ -z "$1" ]; then
   echo "
     Parameters are:
-      --permission      Display permission table
-      --tar             Show examples of tar command
-      --zip             Show examples of zip command
-      --mysql           Show examples of mysql command
-      --findremove      Show examples of find and rm command
-      --services        Show examples of managing daemon
-      --sed             Show examples of sed command
-      --resources       Show resources from internet
-      --directory       Show examples of using mkdir command
-      --watch           Show examples of using watch command
+      ${bold}--permission${normal}      Display permission table
+      ${bold}--tar${normal}             Show examples of tar command
+      ${bold}--zip${normal}             Show examples of zip command
+      ${bold}--mysql${normal}           Show examples of mysql command
+      ${bold}--findremove${normal}      Show examples of find and rm command
+      ${bold}--services${normal}        Show examples of managing daemon
+      ${bold}--sed${normal}             Show examples of sed command
+      ${bold}--resources${normal}       Show resources from internet
+      ${bold}--directory${normal}       Show examples of using mkdir command
+      ${bold}--watch${normal}           Show examples of using watch command
   "
 fi
 
