@@ -214,11 +214,11 @@ function sed() {
   echo "
     Replacing a string
       sed 's/old/new/g' file
-    
+
     Replacing a string and make it permanent
       sed -i 's/old/new/g' file
       sed -e 's/old/new/g' > file
-      
+
     For more files or for a list of them
       grep -lre 'pattern' . | xargs -d'\n' sed -i 's/old/replace/g'
   "
@@ -238,9 +238,9 @@ function directory() {
   echo "
     Create multiple directories at once in a single location with nested directories
       mkdir -p Dev/{git,www/{drupal,apc},svn}/sub
-      
+
       Expected Output:
-      
+
       Dev
        -- git
            -- sub
@@ -249,17 +249,30 @@ function directory() {
            -- apc
        -- svn
            -- sub
-    
+
     Create nested folders at once
       mkdir -p Dev/sub1/sub2/sub3/sub4
-      
+
       Expected Output:
-      
+
       Dev
        -- sub1
            -- sub2
                -- sub3
                    -- sub4
+  "
+}
+##################################
+# Using watch for monitoring
+##################################
+function watch() {
+  echo "
+    Watch mysql process. Where -n 1 specifies that mysqladmin executes every second.
+      watch -n 1 mysqladmin processlist
+
+    Watch mysql process using specific user account.
+      watch -n 1 mysqladmin --user=<user> --password=<password> processlist
+
   "
 }
 
@@ -282,6 +295,8 @@ elif [ "$1" == "--resources" ]; then
   resources
 elif [ "$1" == "--directory" ]; then
   directory
+elif [ "$1" == "--watch" ]; then
+  watch
 elif [ -z "$1" ]; then
   echo "
     Parameters are:
@@ -293,6 +308,8 @@ elif [ -z "$1" ]; then
       --services        Show examples of managing daemon
       --sed             Show examples of sed command
       --resources       Show resources from internet
+      --directory       Show examples of using mkdir command
+      --watch           Show examples of using watch command
   "
 fi
 
