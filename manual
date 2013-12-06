@@ -124,8 +124,16 @@ function mysql() {
     Create database
       ${bold}ssh user@host “mysql -uDBusername -pDBpassword -Bse ‘create DBname’”${normal}
 
+      or
+
+      ${bold}mysqladmin -u root -pmypassword create testdb${normal}
+
     Drop database
       ${bold}ssh user@host “mysql -uDBusername -pDBpassword -Bse ‘drop database DBname’”${normal}
+
+      or
+
+      ${bold}mysqladmin -u root -pmypassword drop testdb${normal}
 
     Create database
       ${bold}ssh user@host “mysql -uDBusername -pDBpassword -Bse ‘create database DBname’”${normal}
@@ -138,6 +146,95 @@ function mysql() {
 
     Backup database
       ${bold}ssh -C user@hostname “mysqldump –opt -uDBuser -pDBpassword –compress DBname | gzip -9 -c” > /path/to/target/output.sql.gz${normal}
+
+    Change the MySQL root user password
+      ${bold}mysqladmin -u root -pmypassword password 'newpassword'${normal}
+
+    Check whether MySQL Server is up and running
+      ${bold}mysqladmin -u root -pmypassword ping${normal}
+
+    Find out what version of MySQL I am running
+      ${bold}mysqladmin -u root -pmypassword version${normal}
+
+    Check current status of MySQL server
+      ${bold}mysqladmin -u root -pmypassword status${normal}
+
+      The status command displays the following information:
+
+      * ${bold}Uptime${normal}: Uptime of the mysql server in seconds
+      * ${bold}Threads${normal}: Total number of clients connected to the server.
+      * ${bold}Questions${normal}: Total number of queries the server has executed since the startup.
+      * ${bold}Slow queries${normal}: Total number of queries whose execution time waas more than long_query_time variable’s value.
+      * ${bold}Opens${normal}: Total number of tables opened by the server.
+      * ${bold}Flush tables${normal}: How many times the tables were flushed.
+      * ${bold}Open tables${normal}: Total number of open tables in the database.
+
+    View all the MySQL Server status variable and it’s current value
+      ${bold}mysqladmin -u root -pmypassword extended-status${normal}
+
+    Display all MySQL server system variables and the values
+      ${bold}mysqladmin  -u root -pmypassword variables${normal}
+
+    Display all the running process/queries in the mysql database
+      ${bold}mysqladmin -u root -pmypassword processlist${normal}
+
+      or use the command below to effectively debug any performance issue and identify the query that is causing problems, by running the command automatically every 1 second
+
+      ${bold}mysqladmin -u root -pmypassword -i 1 processlist${normal}
+
+    Reload the privilege or the grants tables
+      ${bold}mysqladmin -u root -pmypassword reload;${normal}
+
+    Refresh the privilege or the grants tables
+    Refresh command will flush all the tables and close/open log files
+      ${bold}mysqladmin -u root -pmypassword refresh${normal}
+
+    Safe method to shutdown the MySQL server
+      ${bold}mysqladmin -u root -pmypassword shutdown${normal}
+
+      or
+
+      ${bold}sudo service mysql stop${normal}
+
+      or
+
+      ${bold}sudo /etc/init.d/mysql stop${normal}
+
+    List of all mysqladmin flush commands
+      ${bold}mysqladmin -u root -ptmppassword flush-hosts
+      mysqladmin -u root -ptmppassword flush-logs
+      mysqladmin -u root -ptmppassword flush-privileges
+      mysqladmin -u root -ptmppassword flush-status
+      mysqladmin -u root -ptmppassword flush-tables
+      mysqladmin -u root -ptmppassword flush-threads${normal}
+
+      * flush-hosts: Flush all information in the host cache.
+      * flush-privileges: Reload the grant tables (same as reload).
+      * flush-status: Clear status variables.
+      * flush-threads: Flush the thread cache.
+
+    Kill a hanging MySQL Client Process
+      ${bold}mysqladmin -u root -pmypassword processlist${normal}
+
+      Then, use the kill command and pass the process_id as shown below
+      To kill multiple process you can pass comma separated process id’s
+
+      ${bold}mysqladmin -u root -pmypassword kill 20${normal}
+
+      or
+
+      ${bold}mysqladmin -u root -pmypassword kill 20,24,26,30${normal}
+
+    Start and stop MySQL replication on a slave server
+      ${bold}mysqladmin -u root -pmypassword stop-slave${normal}
+      ${bold}mysqladmin -u root -pmypassword start-slave${normal}
+
+    Combine multiple mysqladmin commands together
+      ${bold}mysqladmin -u root -pmypassword process status version${normal}
+
+      Or use the short form as shown below
+      
+      ${bold}mysqladmin -u root -ptmppassword pro stat ver${normal}
   "
 }
 ##################################
