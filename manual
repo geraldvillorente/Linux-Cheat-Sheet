@@ -319,7 +319,8 @@ function sed() {
 
     Replacing a string and make it permanent
       ${bold}sed -i 's/old/new/g' file
-      sed -e 's/old/new/g' > file${normal}
+      sed -e 's/old/new/g' > file$
+      sed -i 's|'$fileWithPath'|HAHA|g' file{normal}
 
     For more files or for a list of them
       ${bold}grep -lre 'pattern' . | xargs -d'\n' sed -i 's/old/replace/g'${normal}
