@@ -378,6 +378,22 @@ function watch() {
 
   "
 }
+##################################
+# SSH
+##################################
+function ssh() {
+  echo "
+    Transfer Client Key to Host
+      ${bold}ssh-copy-id <username>@<host>
+      ssh-copy-id \"<username>@<host> -p <port_nr>\"${normal}
+      
+    Key Encryption Level
+    Note: The default is a 2048 bit key. You can increase this to 4096 
+    bits with the -b flag (Increasing the bits makes it harder to crack 
+    the key by brute force methods).
+      ${bold}ssh-keygen -t rsa -b 4096${normal}
+  "
+}
 
 ##################################
 if [ "$1" == "--permission" ]; then
