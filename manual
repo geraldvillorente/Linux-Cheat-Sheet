@@ -701,6 +701,33 @@ function systemAdminTools() {
         ${bold}df -H${normal}
 
     ${bold}kill${normal} - send a signal to a process
+
+    ${bold}procinfo${normal} - display system statistics gathered from /proc
+      procinfo gathers some system data from the /proc directory and prints it
+      nicely formatted on the standard output device.
+
+    ${bold}lsdev${normal} - display information about installed hardware
+
+    ${bold}stat${normal} - display file or file system status
+
+    ${bold}watch${normal} - execute a program periodically, showing output fullscreen
+      watch runs command repeatedly, displaying its output and errors (the first screenfull).
+      This allows you to watch the program output change over time.  By default, the program
+      is run every 2 seconds. By default, watch will run until interrupted.
+
+    ${bold}ldd${normal} - print shared library dependencies
+
+    ${bold}lsmod${normal} – list of installed modules
+
+    ${bold}rsync${normal} - a fast, versatile, remote (and local) file-copying tool
+      Rsync is a fast and extraordinarily versatile file copying tool. It can copy locally,
+      to/from another host over any remote shell, or to/from a remote rsync daemon.
+      It offers a large number of options that control every aspect of its behavior and permit
+      very flexible specification of the set of files to be copied. It is famous for its
+      delta-transfer algorithm, which reduces the amount of data sent over the network  by
+      sending only the differences between the source files and the existing files in the
+      destination. Rsync is widely used for backups and mirroring and as an improved copy
+      command for everyday use.
   ";
 }
 
