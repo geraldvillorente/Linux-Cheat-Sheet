@@ -233,7 +233,7 @@ function mysql() {
       ${bold}mysqladmin -u root -pmypassword process status version${normal}
 
       Or use the short form as shown below
-      
+
       ${bold}mysqladmin -u root -ptmppassword pro stat ver${normal}
   "
 }
@@ -386,13 +386,322 @@ function ssh() {
     Transfer Client Key to Host
       ${bold}ssh-copy-id <username>@<host>
       ssh-copy-id \"<username>@<host> -p <port_nr>\"${normal}
-      
+
     Key Encryption Level
-    Note: The default is a 2048 bit key. You can increase this to 4096 
-    bits with the -b flag (Increasing the bits makes it harder to crack 
+    Note: The default is a 2048 bit key. You can increase this to 4096
+    bits with the -b flag (Increasing the bits makes it harder to crack
     the key by brute force methods).
       ${bold}ssh-keygen -t rsa -b 4096${normal}
   "
+}
+##################################\
+# System admin tools
+##################################
+function systemAdminTools() {
+  echo "
+    ${bold}top${normal} - Process Activity Command
+
+      The top command provides several useful hot keys:
+
+      Hot Key Usage
+      ${bold}t${normal}  Displays summary information off and on.
+      ${bold}m${normal}  Displays memory information off and on.
+      ${bold}A${normal}  Sorts the display by top consumers of various system resources. Useful for quick identification of performance-hungry tasks on a system.
+      ${bold}f${normal}  Enters an interactive configuration screen for top. Helpful for setting up top for a specific task.
+      ${bold}o${normal}  Enables you to interactively select the ordering within top.
+      ${bold}r${normal}  Issues renice command.
+      ${bold}k${normal}  Issues kill command.
+      ${bold}z${normal}  Turn on or off color/mono
+
+    ${bold}vmstat${normal} - System Activity, Hardware and System Information
+
+      The command ${bold}vmstat${normal} reports information about ${bold}processes${normal}, ${bold}memory${normal}, ${bold}paging${normal}, ${bold}block IO${normal}, ${bold}traps${normal}, and ${bold}cpu${normal} activity.
+
+      Examples:
+
+      Display memory utilization slabinfo
+        ${bold}vmstat -m${normal}
+
+      Get information about active / inactive memory pages
+        ${bold}vmstat -a${normal}
+
+    ${bold}w${normal} - Find Out Who Is Logged on And What They Are Doing
+
+    ${bold}uptime${normal} - Tell How Long The System Has Been Running
+
+    ${bold}ps${normal} - Displays The Processes
+
+      To select all processes
+        ${bold}ps -A${normal}
+
+      Show long format output
+        ${bold}ps -Al${normal}
+
+      To turn on extra full mode
+        ${bold}ps -AlF${normal}
+
+      To see threads (LWP - light weight process and NLWP - number of lightweight processes).
+        ${bold}ps -AlFH${normal}
+
+      To see threads after processes
+        ${bold}ps -AlLm${normal}
+
+      Print all process on the server
+        ${bold}ps ax$
+        ps axu${normal}
+
+      Print a process tree
+        ${bold}ps -ejH
+        ps axjf
+        pstree${normal}
+
+      Print security information
+        ${bold}ps -eo euser,ruser,suser,fuser,f,comm,label
+        ps axZ
+        ps -eM${normal}
+
+      See every process running as user Gerald
+        ${bold}ps -U gerald -u gerald u${normal}
+
+      Set output in a user-defined format
+        ${bold}ps -eo pid,tid,class,rtprio,ni,pri,psr,pcpu,stat,wchan:14,comm
+        ps axo stat,euid,ruid,tty,tpgid,sess,pgrp,ppid,pid,pcpu,comm
+        ps -eopid,tt,user,fname,tmout,f,wchan${normal}
+
+      Display only the process IDs of Lighttpd
+        ${bold}ps -C lighttpd -o pid=${normal}
+
+        or
+
+        ${bold}pgrep lighttpd${normal}
+
+        or
+
+        ${bold}pgrep -u gerald php-cgi${normal}
+
+      Display the name of PID 1234
+        ${bold}ps -p 1 -o comm=${normal}
+
+      Find out the top 10 memory consuming process
+        ${bold}ps -auxf | sort -nr -k 4 | head -10${normal}
+
+      Find out top 10 CPU consuming process
+        ${bold}ps -auxf | sort -nr -k 3 | head -10${normal}
+
+    ${bold}free${normal} - Memory Usage
+
+    ${bold}iostat${normal} - Average CPU Load, Disk Activity
+
+    ${bold}sar${normal} - Collect and Report System Activity
+
+      To display the network counters from the 10th
+        ${bold}sar -n DEV -f /var/log/sa/sa10 | more${normal}
+
+      You can also display real time usage
+        ${bold}sar 4 5${normal}
+
+    ${bold}mpstat${normal} - Multiprocessor Usage
+
+      Display average CPU utilization per processor
+        ${bold}mpstat -P ALL${normal}
+
+    ${bold}pmap${normal} - Process Memory Usage
+
+      To display process memory information for pid # 1234
+        ${bold}pmap -d 1234${normal}
+
+    ${bold}netstat${normal} and ${bold}ss${normal} - Network Statistics
+      The command ${bold}netstat${normal} displays network connections,
+      routing tables, interface statistics, masquerade connections, and
+      multicast memberships. ${bold}ss${normal} command is used to dump socket
+      statistics. It allows showing information similar to netstat.
+
+    ${bold}iptraf${normal} - Real-time Network Statistics
+
+    ${bold}tcpdump${normal} - Detailed Network Traffic Analysis
+
+      To display traffic info about DNS
+        ${bold}tcpdump -i eth0 'udp port 53'${normal}
+
+      To display all IPv4 HTTP packets to and from port 80,
+      i.e. print only packets that contain data, not, for
+      example, SYN and FIN packets and ACK-only packets
+        ${bold}tcpdump 'tcp port 80 and (((ip[2:2] - ((ip[0]&0xf)<<2)) - ((tcp[12]&0xf0)>>2)) != 0)'${normal}
+
+      To display all FTP session to 192.168.1.104
+        ${bold}tcpdump -i eth0 'dst 192.168.1.104 and (port 21 or 20)'${normal}
+
+      To display all HTTP session to 192.168.1.104
+        ${bold}tcpdump -ni eth0 'dst 192.168.1.5 and tcp and port http'${normal}
+
+      Use wireshark to view detailed information about files
+        ${bold}tcpdump -n -i eth0 -s 0 -w output.txt src or dst port 80${normal}
+
+    ${bold}strace${normal} - System Calls
+      Trace system calls and signals. This is useful for debugging
+      webserver and other server problems.
+
+    ${bold}/Proc file system${normal} - Various Kernel Statistics
+      ${bold}/proc${normal} file system provides detailed information about various
+      hardware devices and other Linux kernel information.
+
+      Examples:
+
+      ${bold}cat /proc/cpuinfo
+      cat /proc/meminfo
+      cat /proc/zoneinfo
+      cat /proc/mounts${normal}
+
+    ${bold}nmap${normal} - Scan your server for open ports.
+
+    ${bold}lsof${normal} - List open files, network connections and much more.
+
+    ${bold}ntop${normal} - The best tool to see network usage in a way
+      similar to what top command does for processes i.e. it is network
+      traffic monitoring software. You can see network status, protocol wise
+      distribution of traffic for UDP, TCP, DNS, HTTP and other protocols.
+
+    ${bold}vnstat${normal} - vnStat is a console-based network traffic monitor.
+      It keeps a log of hourly, daily and monthly network traffic
+      for the selected interface(s).
+
+    ${bold}htop${normal} - ${bold}htop${normal} is an enhanced version of top, the interactive process
+      viewer, which can display the list of processes in a tree form.
+
+    ${bold}mtr${normal} - ${bold}mtr${normal} combines the functionality of the traceroute and ping
+      programs in a single network diagnostic tool.
+
+    ${bold}dstat${normal} - Versatile tool for generating system resource statistics.
+      Combines ${bold}vmstat${normal}, ${bold}iostat${normal}, ${bold}ifstat${normal}, ${bold}netstat${normal} information and more.
+
+    ${bold}atop${normal} - AT Computing's System & Process Monitor
+      The program atop is an interactive monitor to view the load on a Linux system.
+      It shows the occupation of the most critical hardware resources (from a performance
+      point of view) on system level, i.e. cpu, memory, disk and network. It also shows
+      which processes are responsible for the indicated load with respect to cpu- and
+      memory load on process level. Disk load is shown if per process 'storage accounting'
+      is active in the kernel or if the kernel patch 'cnt' has been installed.
+      Network load is only shown per process if the kernel patch 'cnt' has been installed.
+
+      But the tool itself can cause a lot of trouble in heavily loaded servers and it enables
+      process accounting and has a service running all the time.
+
+      To use it efficiently on RHEL, CentOS;
+      1- install rpmforge repo
+      2- yum install atop
+      3- killalll atop
+      4- chkconfig atop off
+      5- rm -rf /tmp/atop.d/ /var/log/atop/
+      6- then don’t directly run atop command, but instead run it as follows;
+      7. ATOPACCT=' atop
+
+    ${bold}iftop${normal} - Display bandwidth usage on an interface by host
+      iftop listens to network traffic on a named interface, or on the first interface it can
+      find which looks like an external interface if none is specified, and displays a table
+      of current bandwidth usage by pairs of hosts. iftop must be run with sufficient permissions
+      to monitor all network traffic on the interface; see pcap(3) for more information, but on
+      most systems this means that it must be run as root.
+
+    ${bold}whowatch${normal} - console, interactive, process and users monitoring tool
+      Whowatch is an console, interactive users and process monitoring tool. It displays
+      information about the users currently logged on to the machine, in real-time.
+      Besides standard informations (login name, tty, host, user's process), the type of
+      the connection (ie. telnet or ssh) is shown. Display of users command line can be
+      switch to tty idle time. Certain user can be selected and his processes tree may
+      be viewed as well as tree of all system processes. Tree may be displayed with
+      additional column that shows owner of each process. In the process tree mode
+      ${bold}SIGINT${normal} and ${bold}SIGKILL${normal} signals can be sent to the selected process. Killing processes
+      is just as simple and fun as deleting lines on the screen.
+
+    ${bold}who${normal} - show who is logged on
+      Print information about users who are currently logged in.
+
+    ${bold}finger${normal} - user information lookup program
+      The finger displays information about the system users.
+
+    ${bold}pinky${normal} - lightweight finger
+
+    ${bold}id${normal} - print real and effective user and group IDs
+
+    ${bold}nethog${normal} - Net top tool grouping bandwidth per process
+      NetHogs$ is a small 'net top' tool. Instead of breaking the traffic down per protocol
+      or per subnet, like most such tools do, it groups bandwidth by process - and does not rely
+      on a special kernel module to be loaded. So if there's suddenly a lot of network traffic,
+      you can fire up NetHogs and immediately see which PID is causing this, and if it's some
+      kind of spinning process, kill it.
+
+    ${bold}nmon${normal} - systems administrator, tuner, benchmark tool
+      n${bold}nmon${normal}  is is a systems administrator, tuner, benchmark tool. It can display the CPU,
+      memory, network, disks (mini graphs or numbers), file systems, NFS, top processes,
+      resources (Linux version & processors) and on Power micro-partition information.
+
+    ${bold}iotop${normal} - simple top-like I/O monitor
+      ${bold}iotop${normal} watches I/O usage information output by the Linux kernel (requires 2.6.20 or later)
+      and displays a table of current I/O usage by processes or threads on the system. At least
+      the ${bold}CONFIG_TASK_DELAY_ACCT${normal}, ${bold}CON‐FIG_TASK_IO_ACCOUNTING${normal}, ${bold}CONFIG_TASKSTATS${normal} and ${bold}CONFIG_VM_EVENT_COUNTERS${normal}
+      options need to be enabled in your Linux kernel build configuration.
+
+    ${bold}jnettop${normal} - View hosts/ports taking up the most network traffic
+      ${bold}jnettop${normal} captures traffic coming across the host it is running on and displays streams
+      sorted by bandwidth they use. Result is a nice listing of communication on network by host and
+      port, how many bytes went through this transport and the bandwidth it is consuming.
+
+    ${bold}lttng${normal} - LTTng 2.1.x tracer control command line tool
+      The lttng command line tool from the lttng-tools package is used to control both kernel
+      and user-space tracing. Every interactions with the tracer should be done by this tool
+      or by the liblttng-ctl provided with the lttng-tools package. It's tracers help tracking
+      down performance issues and debugging problems involving multiple concurrent processes and
+      threads. Tracing across multiple systems is also possible.
+
+    ${bold}apachetop${normal} - display real-time web server statistics
+      ApacheTop watches a logfile generated by Apache (in standard common or
+      combined logformat, and generates human-parsable output in realtime.
+
+    ${bold}net${normal} - Tool for administration of Samba and remote CIFS servers.
+
+    ${bold}pcp${normal} - summarize a Performance Co-Pilot (PCP) installation
+      The pcp command summarizes the status of a Performance Co-Pilot (PCP) installation.
+      The report includes: the OS version, a summary of the hardware inventory, the local
+      timezone, details of valid PCP licenses, the PCP software version, the state of the
+      pmcd(1) process and associated Performance Metrics Domain Agents (PMDAs), as well
+      as information about any  PCP  archive  loggers  (pmlogger(1))  and  PCP  inference
+      engines (pmie(1)) that are running.
+
+    ${bold}ngrep${normal} - network grep
+      ngrep strives to provide most of GNU grep's common features, applying them to the
+      network layer. ngrep is a pcap-aware tool that will allow you to specify extended
+      regular expressions to match against data pay‐loads of packets. It currently
+      recognizes TCP, UDP and ICMP across Ethernet, PPP, SLIP, FDDI and null interfaces,
+      and understands bpf filter logic in the same fashion as more common packet sniffing
+      tools, such as tcpdump(8) and snoop(1).
+
+    ${bold}xosview${normal} - X based system monitor
+      xosview is a  monitor which displays the status of several system parameters.
+      These include CPU usage, load average, memory, swap space, network usage and more.
+      Each resource is displayed as a horizontal bar which is separated into color coded
+      regions showing how much of the resource is being put to a particular use.
+
+      Example:
+       ${bold}xosview +disk -ints -bat${normal}
+
+    ${bold}ulimit${normal} - get and set user limits
+
+    ${bold}mytop${normal} - display MySQL server performance info like 'top'
+
+    ${bold}dnstop${normal} - displays various tables of DNS traffic on your network
+
+    ${bold}free${normal} - Display amount of free and used memory in the system
+
+      Example:
+        ${bold}free -h${normal}
+
+    ${bold}df${normal} - report file system disk space usage
+
+      Example:
+        ${bold}df -H${normal}
+
+    ${bold}kill${normal} - send a signal to a process
+  ";
 }
 
 ##################################
@@ -416,6 +725,8 @@ elif [ "$1" == "--directory" ]; then
   directory
 elif [ "$1" == "--watch" ]; then
   watch
+elif [ "$1" == "--sysadmintools" ]; then
+  systemAdminTools
 elif [ -z "$1" ]; then
   echo "
     Parameters are:
@@ -429,7 +740,8 @@ elif [ -z "$1" ]; then
       ${bold}--resources${normal}       Show resources from internet
       ${bold}--directory${normal}       Show examples of using mkdir command
       ${bold}--watch${normal}           Show examples of using watch command
-  "
+      ${bold}--sysadtools${normal}      Monitoring tools every sysadmin should know
+  ";
 fi
 
 exit
